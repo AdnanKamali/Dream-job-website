@@ -1,0 +1,34 @@
+<template>
+  <div>
+    <nav class="p-6 flex items-center justify-between bg-teal-800">
+      <nuxt-link to="/" class="text-xl text-white">D Job</nuxt-link>
+      <div class="flex items-center space-x-4">
+        <nuxt-link to="/" class="text-white hover:text-teal-300"
+          >Home</nuxt-link
+        >
+        <nuxt-link to="/browse" class="text-white hover:text-teal-300"
+          >Browse</nuxt-link
+        >
+      </div>
+    </nav>
+
+    <slot />
+
+    <footer class="p-6 flex flex-wrap items-center justify-between bg-gray-900">
+      <p class="text-gray-300">Copyright (c) 2023 - Djob</p>
+
+      <div class="flex mt-6 md:mt-0 items-center space-x-4">
+        <nuxt-link
+          to="/login"
+          class="py-4 px-6 bg-teal-900 hover:bg-teal-300 text-white rounded-xl"
+          >Login</nuxt-link
+        >
+        <nuxt-link
+          to="/signup"
+          class="py-4 px-6 bg-teal-600 hover:bg-teal-300 text-white rounded-xl"
+          >Sign Up</nuxt-link
+        >
+      </div>
+    </footer>
+  </div>
+</template>
