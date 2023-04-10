@@ -67,6 +67,9 @@
           class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100"
         />
       </div>
+      <button class="py-4 px-6 bg-teal-700 rounded-xl text-white">
+        Submit
+      </button>
     </form>
   </div>
 </template>
