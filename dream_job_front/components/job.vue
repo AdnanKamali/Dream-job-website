@@ -17,7 +17,7 @@ const isMyJobPage = computed(() => props.isMyJobPage);
       </div>
       <div>
         <h1 class="font-semibold">Worldwide</h1>
-        <p class="text-gray-600">$90-120$</p>
+        <p class="text-gray-600">$90-$120</p>
       </div>
       <div>
         <p>Posted Dec. 1. 2022</p>
