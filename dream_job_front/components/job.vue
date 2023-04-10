@@ -1,3 +1,13 @@
+<script lang="ts" setup>
+const props = defineProps({
+  isMyJobPage: {
+    type: Boolean,
+  },
+});
+
+const isMyJobPage = computed(() => props.isMyJobPage);
+</script>
+
 <template>
   <div>
     <div class="p-6 flex items-center justify-between bg-gray-100">
@@ -12,11 +22,23 @@
       <div>
         <p>Posted Dec. 1. 2022</p>
       </div>
-      <div>
+      <div class="space-x-4">
         <nuxt-link
           to="/browse/1"
           class="py-4 px-6 bg-teal-700 text-white rounded-xl"
           >Detail</nuxt-link
+        >
+        <nuxt-link
+          v-if="isMyJobPage"
+          to="/browse/1"
+          class="py-4 px-6 bg-cyan-700 text-white rounded-xl"
+          >Edit</nuxt-link
+        >
+        <nuxt-link
+          v-if="isMyJobPage"
+          to="/browse/1"
+          class="py-4 px-6 bg-rose-700 text-white rounded-xl"
+          >Delete</nuxt-link
         >
       </div>
     </div>
