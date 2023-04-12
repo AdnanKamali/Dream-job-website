@@ -1,3 +1,13 @@
+<script setup lang="ts">
+type Category = {
+  id: string;
+  title: string;
+};
+const { data: categories } = await useFetch<Category[]>(
+  "http://127.0.0.1:8000/api/v1/jobs/categories/"
+);
+</script>
+
 <template>
   <div class="grid md:grid-cols-4 gap-3 py-10 px-6">
     <div class="md:col-span-1 px-6 py-6 bg-teal-700 rounded-xl">
@@ -29,20 +39,24 @@
       <h3 class="mt-6 text-xl text-white">Categories</h3>
 
       <div class="mt-6 space-y-4">
-        <p class="py-4 px-6 text-white rounded-xl">Category 1</p>
-        <p class="py-4 px-6 text-white rounded-xl">Category 2</p>
-        <p class="py-4 px-6 text-white rounded-xl">Category 3</p>
+        <p
+          class="py-4 px-6 text-white rounded-xl"
+          v-for="category in categories"
+          :key="category.id"
+        >
+          {{ category.title }}
+        </p>
       </div>
     </div>
     <div class="col-span-3">
       <div class="space-y-4">
-        <Job />
+        <!-- <Job />
 
         <Job />
 
         <Job />
 
-        <Job />
+        <Job /> -->
       </div>
     </div>
   </div>
