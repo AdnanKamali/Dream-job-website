@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { JobType } from "@/types/types";
+import { JobT } from "@/types/job";
 
 const props = defineProps({
   isMyJobPage: {
@@ -11,7 +11,7 @@ const props = defineProps({
 });
 
 const isMyJobPage = computed(() => props.isMyJobPage);
-const job = computed(() => props.job as JobType);
+const job = computed(() => props.job as JobT);
 </script>
 
 <template>

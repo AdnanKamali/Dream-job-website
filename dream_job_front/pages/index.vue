@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { JobType } from "~/types/types";
+import { JobT } from "~/types/job";
 
-const { data: jobs } = await useFetch<JobType[]>(
+const { data: jobs } = await useFetch<JobT[]>(
   "http://127.0.0.1:8000/api/v1/jobs/newest/"
 );
 </script>
