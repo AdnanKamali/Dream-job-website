@@ -36,7 +36,7 @@ const userStore = useUserStore();
             >Create Job</nuxt-link
           >
           <nuxt-link
-            to="/logout"
+            to="/"
             class="py-4 px-6 bg-rose-600 hover:bg-rose-300 text-white rounded-xl"
             >Log Out</nuxt-link
           >
