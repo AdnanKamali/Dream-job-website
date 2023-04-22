@@ -1,11 +1,20 @@
 <script setup lang="ts">
-type Category = {
-  id: string;
-  title: string;
-};
+import { Category } from "~/types/category";
 const { data: categories } = await useFetch<Category[]>(
   "http://127.0.0.1:8000/api/v1/jobs/categories/"
 );
+
+const selectedCategoriesString = ref<string>("");
+const selectedCategoryList: number[] = []; // list of ides
+
+function toggleCategoryBy(id: number) {
+  const indexOfAvailableCategory = selectedCategoryList.indexOf(id);
+
+  if (indexOfAvailableCategory === -1) selectedCategoryList.push(id);
+  else selectedCategoryList.splice(indexOfAvailableCategory, 1);
+
+  selectedCategoriesString.value = selectedCategoryList.join(",");
+}
 </script>
 
 <template>
@@ -40,9 +49,15 @@ const { data: categories } = await useFetch<Category[]>(
 
       <div class="mt-6 space-y-4">
         <p
-          class="py-4 px-6 text-white rounded-xl"
+          class="py-4 px-6 text-white rounded-xl cursor-pointer"
           v-for="category in categories"
+          @click="toggleCategoryBy(category.id)"
           :key="category.id"
+          :class="{
+            'bg-teal-900': selectedCategoriesString.includes(
+              category.id.toString()
+            ),
+          }"
         >
           {{ category.title }}
         </p>
