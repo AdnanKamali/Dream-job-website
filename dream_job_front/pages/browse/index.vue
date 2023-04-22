@@ -1,11 +1,25 @@
 <script setup lang="ts">
 import { Category } from "~/types/category";
+import { JobT } from "~/types/job";
+
+// Query
+
+const queryRef = ref("");
+let query = "";
+
+function performSearch() {
+  queryRef.value = query;
+}
+
+// Category
+
 const { data: categories } = await useFetch<Category[]>(
   "http://127.0.0.1:8000/api/v1/jobs/categories/"
 );
-
 const selectedCategoriesString = ref<string>("");
 const selectedCategoryList: number[] = []; // list of ides
+
+console.log("Hello");
 
 function toggleCategoryBy(id: number) {
   const indexOfAvailableCategory = selectedCategoryList.indexOf(id);
@@ -15,6 +29,13 @@ function toggleCategoryBy(id: number) {
 
   selectedCategoriesString.value = selectedCategoryList.join(",");
 }
+// don't use in toggle function here is enough
+let { data: jobBrowse } = useFetch<JobT[]>(
+  "http://127.0.0.1:8000/api/v1/jobs/",
+  {
+    query: { query: queryRef, categories: selectedCategoriesString },
+  }
+);
 </script>
 
 <template>
@@ -24,9 +45,13 @@ function toggleCategoryBy(id: number) {
         <input
           type="search"
           placeholder="Find a job..."
+          v-model="query"
           class="w-full px-6 py-6 rounded-xl"
         />
-        <button class="px-6 py-4 bg-teal-900 text-white rounded-xl">
+        <button
+          class="px-6 py-4 bg-teal-900 text-white rounded-xl"
+          @click="performSearch"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -65,13 +90,7 @@ function toggleCategoryBy(id: number) {
     </div>
     <div class="col-span-3">
       <div class="space-y-4">
-        <!-- <Job />
-
-        <Job />
-
-        <Job />
-
-        <Job /> -->
+        <Job v-for="job in jobBrowse" :key="job.id" :job="job" />
       </div>
     </div>
   </div>

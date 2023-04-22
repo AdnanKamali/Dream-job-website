@@ -18,11 +18,11 @@ const job = computed(() => props.job as JobT);
   <div>
     <div class="p-6 flex items-center justify-between bg-gray-100">
       <div>
-        <h1 class="text-xl font-semibold">{{ job.position_location }}</h1>
+        <h1 class="text-xl font-semibold">{{ job.title }}</h1>
         <p class="text-gray-600">{{ job.company_name }}</p>
       </div>
       <div>
-        <h1 class="font-semibold">Worldwide</h1>
+        <h1 class="font-semibold">{{ job.position_location }}</h1>
         <p class="text-gray-600">{{ job.position_salary }}</p>
       </div>
       <div>
