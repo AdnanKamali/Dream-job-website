@@ -23,7 +23,7 @@ const job = computed(() => props.job as JobT);
       </div>
       <div>
         <h1 class="font-semibold">{{ job.position_location }}</h1>
-        <p class="text-gray-600">${{ job.position_salary }}</p>
+        <p class="text-gray-600 text-center">${{ job.position_salary }}</p>
       </div>
       <div>
         <p>Posted {{ job.created_at_formatted }}</p>

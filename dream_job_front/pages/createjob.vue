@@ -1,72 +1,104 @@
+<script setup lang="ts">
+import { useUserStore } from "~/stores/user";
+import { Category } from "~/types/category";
+
+const useStore = useUserStore();
+const router = useRouter();
+
+const jobModel = reactive({
+  category: "",
+  title: "",
+  description: "",
+  position_salary: "",
+  position_location: "",
+  company_name: "",
+  company_location: "",
+  company_email: "",
+});
+
+const errors = ref<string[]>([]);
+
+const { data: categories } = await useFetch<Category[]>(
+  "http://127.0.0.1:8000/api/v1/jobs/categories/"
+);
+async function createJobSubmit() {
+  errors.value = [];
+
+  try {
+    const response = await $fetch("http://127.0.0.1:8000/api/v1/jobs/create/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${useStore.user.token}`,
+      },
+      body: jobModel,
+    });
+    console.log(jobModel);
+    console.log(response);
+  } catch (er: any) {
+    console.log(er);
+  }
+}
+onMounted(() => {
+  if (!useStore.user.isAuthenticated) {
+    router.push("/login");
+  }
+});
+</script>
+
 <template>
   <div class="py-10 px-6">
     <h1 class="mb-6 text-2xl">Create job</h1>
-
-    <form action="">
+    <form @submit.prevent="createJobSubmit">
       <div>
         <label>Category</label>
-        <select class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100">
+        <select
+          v-model="jobModel.category"
+          class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100"
+        >
           <option value="">Select category</option>
-          <option value="cat1">Category 1</option>
-          <option value="cat2">Category 2</option>
+          <option
+            v-for="category in categories"
+            :key="category.id"
+            :value="category.id"
+          >
+            {{ category.title }}
+          </option>
         </select>
       </div>
 
-      <div>
-        <label>Title</label>
-        <input
-          type="text"
-          class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100"
-        />
-      </div>
+      <CreateJobInput label="Title" v-model="jobModel.title" />
 
       <div>
         <label>Description</label>
         <textarea
           type="text"
+          v-model="jobModel.description"
           class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100"
         ></textarea>
       </div>
 
-      <div>
-        <label>Salary</label>
-        <input
-          type="text"
-          class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100"
-        />
+      <CreateJobInput label="Salary" v-model="jobModel.position_salary" />
+
+      <CreateJobInput label="Location" v-model="jobModel.position_location" />
+
+      <CreateJobInput label="Company name" v-model="jobModel.company_name" />
+
+      <CreateJobInput
+        label="Company location"
+        v-model="jobModel.company_location"
+      />
+
+      <div
+        v-if="errors.length"
+        class="mb-6 py-4 px-6 bg-rose-400 text-white rounded-xl"
+      >
+        <p v-for="error in errors" :key="error">
+          {{ error }}
+        </p>
       </div>
 
-      <div>
-        <label>Location</label>
-        <input
-          type="text"
-          class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100"
-        />
-      </div>
-
-      <div>
-        <label>Company Name</label>
-        <input
-          type="text"
-          class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100"
-        />
-      </div>
-
-      <div>
-        <label>Company location</label>
-        <input
-          type="text"
-          class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100"
-        />
-      </div>
-
-      <div>
-        <label>Company e-mail</label>
-        <input
-          type="text"
-          class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100"
-        />
-      </div>
+      <CreateJobInput label="Company e-mail" v-model="jobModel.company_email" />
       <button class="py-4 px-6 bg-teal-700 rounded-xl text-white">
         Submit
       </button>

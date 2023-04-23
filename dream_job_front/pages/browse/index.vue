@@ -19,8 +19,6 @@ const { data: categories } = await useFetch<Category[]>(
 const selectedCategoriesString = ref<string>("");
 const selectedCategoryList: number[] = []; // list of ides
 
-console.log("Hello");
-
 function toggleCategoryBy(id: number) {
   const indexOfAvailableCategory = selectedCategoryList.indexOf(id);
 
