@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { useUserStore } from "@/stores/user";
 
-const userStore = useUserStore();
+const useStore = useUserStore();
+
+function logout() {
+  useStore.removeToken();
+}
 </script>
 
 <template>
@@ -24,7 +28,7 @@ const userStore = useUserStore();
       <p class="text-gray-300">Copyright (c) 2023 - Djob</p>
 
       <div class="flex mt-6 md:mt-0 items-center space-x-4">
-        <template v-if="userStore.user.isAuthenticated">
+        <template v-if="useStore.user.isAuthenticated">
           <nuxt-link
             to="/myjobs"
             class="py-4 px-6 bg-teal-900 hover:bg-teal-300 text-white rounded-xl"
@@ -35,10 +39,11 @@ const userStore = useUserStore();
             class="py-4 px-6 bg-teal-600 hover:bg-teal-300 text-white rounded-xl"
             >Create Job</nuxt-link
           >
-          <nuxt-link
+          <a
             to="/"
-            class="py-4 px-6 bg-rose-600 hover:bg-rose-300 text-white rounded-xl"
-            >Log Out</nuxt-link
+            @click="logout"
+            class="py-4 px-6 bg-rose-600 hover:bg-rose-300 text-white rounded-xl cursor-pointer"
+            >Log Out</a
           >
         </template>
         <template v-else>
