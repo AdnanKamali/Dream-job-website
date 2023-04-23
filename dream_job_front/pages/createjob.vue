@@ -2,8 +2,22 @@
 import { useUserStore } from "~/stores/user";
 import { Category } from "~/types/category";
 
+// Use this for better error view
+enum Labels {
+  title = "Title",
+  description = "Description",
+  category = "Category",
+  position_salary = "Salary",
+  position_location = "Location",
+  company_name = "Company name",
+  company_location = "Company location",
+  company_email = "Company e-mail",
+}
+
 const useStore = useUserStore();
 const router = useRouter();
+
+// Create job information for send to server
 
 const jobModel = reactive({
   category: "",
@@ -21,9 +35,23 @@ const errors = ref<string[]>([]);
 const { data: categories } = await useFetch<Category[]>(
   "http://127.0.0.1:8000/api/v1/jobs/categories/"
 );
+
+function fieldsEmptyCheck() {
+  for (const [key, value] of Object.entries(jobModel)) {
+    if (!value) {
+      // @ts-ignore
+      errors.value.push(`The field of ${Labels[key]} should not be empty`);
+    }
+  }
+}
+
 async function createJobSubmit() {
   errors.value = [];
 
+  fieldsEmptyCheck();
+  if (errors.value) {
+    return;
+  }
   try {
     const response = await $fetch("http://127.0.0.1:8000/api/v1/jobs/create/", {
       method: "POST",
@@ -33,8 +61,6 @@ async function createJobSubmit() {
       },
       body: jobModel,
     });
-    console.log(jobModel);
-    console.log(response);
   } catch (er: any) {
     console.log(er);
   }
@@ -89,6 +115,12 @@ onMounted(() => {
         v-model="jobModel.company_location"
       />
 
+      <CreateJobInput
+        label="Company e-mail"
+        type="email"
+        v-model="jobModel.company_email"
+      />
+
       <div
         v-if="errors.length"
         class="mb-6 py-4 px-6 bg-rose-400 text-white rounded-xl"
@@ -98,7 +130,6 @@ onMounted(() => {
         </p>
       </div>
 
-      <CreateJobInput label="Company e-mail" v-model="jobModel.company_email" />
       <button class="py-4 px-6 bg-teal-700 rounded-xl text-white">
         Submit
       </button>
