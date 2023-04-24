@@ -49,10 +49,11 @@ async function createJobSubmit() {
   errors.value = [];
 
   fieldsEmptyCheck();
-  if (errors.value) {
+  if (errors.value.length) {
     return;
   }
   try {
+    console.log("Try");
     const response = await $fetch("http://127.0.0.1:8000/api/v1/jobs/create/", {
       method: "POST",
       headers: {

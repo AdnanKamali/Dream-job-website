@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import { JobT } from "@/types/job";
+import { useUserStore } from "~/stores/user";
+
+const useStore = useUserStore();
 
 const props = defineProps({
   isMyJobPage: {
@@ -10,8 +13,27 @@ const props = defineProps({
   },
 });
 
-const isMyJobPage = computed(() => props.isMyJobPage);
 const job = computed(() => props.job as JobT);
+
+const emitDeleteJobView = defineEmits(["deleteJobView"]);
+
+async function deleteJob(id: number) {
+  try {
+    const response = await $fetch(
+      "http://127.0.0.1:8000/api/v1/jobs/" + id + "/delete/",
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Token " + useStore.user.token,
+        },
+      }
+    );
+    emitDeleteJobView("deleteJobView", id);
+  } catch (err) {
+    console.log("Error", err);
+  }
+}
 </script>
 
 <template>
@@ -35,16 +57,16 @@ const job = computed(() => props.job as JobT);
           >Detail</nuxt-link
         >
         <nuxt-link
-          v-if="isMyJobPage"
+          v-if="props.isMyJobPage"
           :to="`/browse/${job.id}`"
           class="py-4 px-6 bg-cyan-700 text-white rounded-xl"
           >Edit</nuxt-link
         >
-        <nuxt-link
-          v-if="isMyJobPage"
-          :to="`/browse/${job.id}`"
-          class="py-4 px-6 bg-rose-700 text-white rounded-xl"
-          >Delete</nuxt-link
+        <a
+          v-if="props.isMyJobPage"
+          @click="deleteJob(job.id)"
+          class="py-4 px-6 bg-rose-700 text-white rounded-xl cursor-pointer"
+          >Delete</a
         >
       </div>
     </div>

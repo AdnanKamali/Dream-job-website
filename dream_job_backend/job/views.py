@@ -42,6 +42,15 @@ class CreateJobView(APIView):
 
         return Response({"status": "errors", "errors": form.errors})
 
+    def put(self, request, pk):
+        pass
+
+    def delete(self, request, pk):
+        job = Job.objects.filter(created_by=request.user, pk=pk)
+
+        job.delete()
+        return Response({"status": "deleted"})
+
 
 class NewestJobsView(APIView):
     def get(self, request):

@@ -24,6 +24,10 @@ async function getMyJobs() {
   }
 }
 
+function deleteJobView(id: number) {
+  myJobs.value = myJobs.value.filter((job) => job.id !== id);
+}
+
 onMounted(() => {
   if (useStore.user.isAuthenticated) getMyJobs();
   else router.push("/login");
@@ -39,6 +43,7 @@ onMounted(() => {
         :key="myJob.id"
         :job="myJob"
         :is-my-job-page="true"
+        @delete-job-view="deleteJobView"
       />
     </div>
   </div>
