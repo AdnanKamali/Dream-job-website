@@ -58,7 +58,7 @@ async function deleteJob(id: number) {
         >
         <nuxt-link
           v-if="props.isMyJobPage"
-          :to="`/browse/${job.id}`"
+          :to="`/edit/${job.id}`"
           class="py-4 px-6 bg-cyan-700 text-white rounded-xl"
           >Edit</nuxt-link
         >

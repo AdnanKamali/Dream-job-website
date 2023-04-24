@@ -43,7 +43,15 @@ class CreateJobView(APIView):
         return Response({"status": "errors", "errors": form.errors})
 
     def put(self, request, pk):
-        pass
+        job = Job.objects.filter(created_by=request.user, pk=pk).first()
+
+        form = JobForm(instance=job, data=request.data)
+        if form.is_valid():
+            job = form.save()
+
+            return Response({"status": "updated"})
+
+        return Response({"status": "errors", "errors": form.errors})
 
     def delete(self, request, pk):
         job = Job.objects.filter(created_by=request.user, pk=pk)
@@ -78,7 +86,6 @@ class BrowseJobsView(APIView):
             jobs = jobs.filter(title__icontains=query)
 
         categories = request.GET.get("categories", "")
-        print(request.GET)
 
         if categories:
             jobs = jobs.filter(category_id__in=categories.split(","))
