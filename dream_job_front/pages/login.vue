@@ -40,6 +40,11 @@ async function logIn() {
 
 
 <template>
+  <Html>
+    <Head>
+      <Title>Log In</Title>
+    </Head>
+  </Html>
   <div class="py-10 px-6">
     <div class="max-w-sm mx-auto py-10 px-6 bg-gray-100 rounded-xl">
       <h1 class="mb-6 text-2xl">Log in</h1>
@@ -67,7 +72,7 @@ async function logIn() {
         </div>
 
         <button class="py-4 px-6 bg-teal-700 rounded-xl text-white">
-          Submit
+          Login
         </button>
       </form>
     </div>

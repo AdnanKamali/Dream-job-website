@@ -7,6 +7,11 @@ const { data: jobs } = await useFetch<JobT[]>(
 </script>
 
 <template>
+  <Html>
+    <Head>
+      <Title>Find Your Dream Job</Title>
+    </Head>
+  </Html>
   <div>
     <div class="py-20 px6 bg-teal-700 text-center">
       <h1 class="mb-12 text-5xl text-white">Find a job anywhere</h1>

@@ -32,6 +32,11 @@ async function signUp() {
 </script>
 
 <template>
+  <Html>
+    <Head>
+      <Title>Sign Up</Title>
+    </Head>
+  </Html>
   <div class="py-10 px-6">
     <div class="max-w-sm mx-auto py-10 px-6 bg-gray-100 rounded-xl">
       <h1 class="mb-6 text-2xl">Sign up</h1>
@@ -65,7 +70,7 @@ async function signUp() {
         </div>
 
         <button class="py-4 px-6 bg-teal-700 rounded-xl text-white">
-          Submit
+          Sign Up
         </button>
       </form>
     </div>

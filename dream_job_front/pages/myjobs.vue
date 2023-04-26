@@ -35,6 +35,11 @@ onMounted(() => {
 </script>
 
 <template>
+  <Html>
+    <Head>
+      <Title>My Jobs</Title>
+    </Head>
+  </Html>
   <div class="py-10 px-6">
     <h1 class="mb-6 text-2xl">My Jobs</h1>
     <div class="space-y-4">

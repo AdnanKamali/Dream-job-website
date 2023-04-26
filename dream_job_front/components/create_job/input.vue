@@ -9,7 +9,7 @@ const modelValue = computed({
 
 <template>
   <div>
-    <label>{{ props.label }}</label>
+    <label class="font-bold">{{ props.label }}</label>
     <input
       :type="props.type ?? 'text'"
       :value="props.modelValue"

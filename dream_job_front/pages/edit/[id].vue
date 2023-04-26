@@ -76,6 +76,11 @@ onMounted(() => {
 </script>
 
 <template>
+  <Html>
+    <Head>
+      <Title>Edit Job</Title>
+    </Head>
+  </Html>
   <div class="py-10 px-6">
     <h1 class="mb-6 text-2xl">Create job</h1>
     <form @submit.prevent="createJobSubmit">

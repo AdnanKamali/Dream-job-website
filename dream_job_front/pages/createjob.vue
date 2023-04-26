@@ -74,11 +74,16 @@ onMounted(() => {
 </script>
 
 <template>
+  <Html>
+    <Head>
+      <Title>Create Job</Title>
+    </Head>
+  </Html>
   <div class="py-10 px-6">
     <h1 class="mb-6 text-2xl">Create job</h1>
     <form @submit.prevent="createJobSubmit">
       <div>
-        <label>Category</label>
+        <label class="font-bold">Category</label>
         <select
           v-model="jobModel.category"
           class="w-full mt-2 mb-2 p-4 rounded-xl bg-gray-100"
@@ -97,7 +102,7 @@ onMounted(() => {
       <CreateJobInput label="Title" v-model="jobModel.title" />
 
       <div>
-        <label>Description</label>
+        <label class="font-bold">Description</label>
         <textarea
           type="text"
           v-model="jobModel.description"
